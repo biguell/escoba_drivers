@@ -94,6 +94,17 @@ def reset_password():
         else: flash('Email o PIN incorrectos.', 'danger')
     return render_template('reset_password.html', supervisores=SUPERVISORES_CONTACTO)
 
+# --- NUEVA RUTA: CAMBIO DE CLAVE INTERNO ---
+@app.route('/change_password_internal', methods=['POST'])
+@login_required
+def change_password_internal():
+    new_pwd = request.form.get('new_password')
+    if new_pwd:
+        current_user.password_hash = generate_password_hash(new_pwd)
+        db.session.commit()
+        flash('¡Tu contraseña ha sido actualizada!', 'success')
+    return redirect(url_for('dashboard'))
+
 @app.route('/dashboard')
 @login_required
 def dashboard():
