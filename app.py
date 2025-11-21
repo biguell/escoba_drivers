@@ -47,7 +47,6 @@ def seed_data():
     if User.query.first(): return
     for s in ['ANA', 'RAMON', 'JIMMY']:
         db.session.add(User(name=s, role='Supervisor', is_registered=True, current_status='Activo', password_hash=generate_password_hash('admin123')))
-    # Conductores (Lista base para instalaciones nuevas, no afecta si ya hay DB creada)
     conductores = ['KEVIN M. Jr', 'ANDY M.', 'KENNEDY', 'CEMAL', 'ANTONIO', 'HAYDAR', 'JAVIER', 'JOAN A.', 'KADA', 'KIKE', 'NOUH', 'SALVADOR', 'YOEPH']
     for nombre in conductores:
         pin = str(random.randint(1000, 9999))
@@ -108,7 +107,6 @@ def change_password_internal():
 def dashboard():
     settings = GlobalSettings.query.first()
     drivers = User.query.filter_by(role='Conductor').all()
-    # Ordenar: Problemas abajo, Activos arriba
     drivers.sort(key=lambda x: x.current_status != 'Activo')
     dias_map = {0: 'Lunes', 1: 'Martes', 2: 'Miércoles', 3: 'Jueves', 4: 'Viernes', 5: 'Sábado', 6: 'Domingo'}
     return render_template('dashboard.html', user=current_user, drivers=drivers, 
@@ -119,23 +117,20 @@ def dashboard():
 @app.route('/update_status', methods=['POST'])
 @login_required
 def update_status():
-    # Esto es para que el conductor cambie SU PROPIO estado
     if current_user.role == 'Conductor':
         current_user.current_status = request.form.get('status'); db.session.commit(); flash('Estado actualizado.', 'info')
     return redirect(url_for('dashboard'))
 
-# --- NUEVO: ADMIN CAMBIA ESTADO DE CUALQUIERA ---
+# --- ADMIN: CAMBIAR ESTADO DE OTROS ---
 @app.route('/admin/force_status_change/<int:driver_id>', methods=['POST'])
 @login_required
 def force_status_change(driver_id):
     if current_user.role != 'Supervisor': return "403", 403
-    
     driver = User.query.get(driver_id)
     new_status = request.form.get('status')
     if driver and new_status:
-        driver.current_status = new_status
-        db.session.commit()
-        flash(f'Has cambiado el estado de {driver.name} a {new_status}', 'info')
+        driver.current_status = new_status; db.session.commit()
+        flash(f'Estado de {driver.name} cambiado a {new_status}', 'info')
     return redirect(url_for('dashboard'))
 
 @app.route('/admin/next_turn', methods=['POST'])
@@ -161,19 +156,17 @@ def next_turn():
 def add_extra_turn():
     if current_user.role != 'Supervisor': return "403", 403
     settings = GlobalSettings.query.first()
-    if settings.current_escoba2_name:
-        flash('Ya hay un refuerzo asignado.', 'warning')
-        return redirect(url_for('dashboard'))
+    if settings.current_escoba2_name: flash('Ya hay refuerzo.', 'warning'); return redirect(url_for('dashboard'))
     drivers = User.query.filter_by(role='Conductor').all()
     hoy = {0: 'Lunes', 1: 'Martes', 2: 'Miércoles', 3: 'Jueves', 4: 'Viernes', 5: 'Sábado', 6: 'Domingo'}[datetime.now().weekday()]
     candidatos = [d for d in drivers if d.current_status == 'Activo' and hoy not in d.fixed_days_off and d.name != settings.current_escoba_name]
-    if not candidatos: flash('No quedan más conductores disponibles.', 'danger')
+    if not candidatos: flash('No quedan conductores.', 'danger')
     else:
         def get_date(x): return x.last_escoba_date if x.last_escoba_date else datetime(1900,1,1)
         candidatos.sort(key=lambda x: (get_date(x), x.id))
         elegido = candidatos[0]
         settings.current_escoba2_name = elegido.name; elegido.last_escoba_date = datetime.now()
-        db.session.commit(); flash(f'Refuerzo añadido: {elegido.name}', 'success')
+        db.session.commit(); flash(f'Refuerzo: {elegido.name}', 'success')
     return redirect(url_for('dashboard'))
 
 @app.route('/admin/add_driver', methods=['POST'])
@@ -186,7 +179,7 @@ def add_driver():
     else:
         pin = str(random.randint(1000, 9999))
         db.session.add(User(name=name, role='Conductor', current_status='Baja Laboral', is_registered=False, signup_pin=pin))
-        db.session.commit(); flash(f'Conductor {name} añadido. PIN: {pin}', 'success')
+        db.session.commit(); flash(f'Añadido: {name} (PIN: {pin})', 'success')
     return redirect(url_for('dashboard'))
 
 @app.route('/admin/delete_driver/<int:driver_id>', methods=['POST'])
@@ -196,7 +189,7 @@ def delete_driver(driver_id):
     driver = User.query.get(driver_id)
     if driver and driver.role == 'Conductor':
         s = GlobalSettings.query.first()
-        if driver.name == s.current_escoba_name or driver.name == s.current_escoba2_name: flash('No puedes borrar al que está trabajando hoy.', 'danger')
+        if driver.name == s.current_escoba_name or driver.name == s.current_escoba2_name: flash('No puedes borrar al escoba actual.', 'danger')
         else: db.session.delete(driver); db.session.commit(); flash(f'Eliminado: {driver.name}', 'success')
     return redirect(url_for('dashboard'))
 

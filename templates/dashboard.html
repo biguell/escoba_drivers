@@ -22,9 +22,7 @@
     <h6 class="text-muted text-uppercase small fw-bold mb-0">Plantilla de Conductores</h6>
     <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddDriver">👤 Nuevo Conductor</button>
 </div>
-{% else %}
-<h6 class="text-muted text-uppercase small fw-bold mb-3">Cola de Rotación (Antigüedad)</h6>
-{% endif %}
+{% else %}<h6 class="text-muted text-uppercase small fw-bold mb-3">Cola de Rotación (Antigüedad)</h6>{% endif %}
 
 <div class="row">
     {% for d in drivers %}
@@ -36,7 +34,6 @@
                     <div class="small text-muted">Última vez: {% if d.last_escoba_date %}<span class="text-dark fw-bold">{{ d.last_escoba_date.strftime('%d/%m') }}</span>{% else %}<span class="text-danger fw-bold">NUNCA</span>{% endif %}</div>
                 </div>
                 <div class="text-end d-flex align-items-center gap-2">
-                    
                     {% if user.role == 'Supervisor' %}
                         <form action="/admin/force_status_change/{{ d.id }}" method="POST">
                             <select name="status" class="form-select form-select-sm fw-bold border-0 {% if d.current_status == 'Activo' %}bg-success text-white{% elif d.current_status == 'Baja Laboral' %}bg-danger text-white{% else %}bg-warning text-dark{% endif %}" onchange="this.form.submit()" style="width: auto; cursor: pointer;">
