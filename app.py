@@ -16,6 +16,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+# SUPERVISORES (Solo para referencia, el login real va por base de datos)
 SUPERVISORES_CONTACTO = [
     {'nombre': 'ANA',   'telefono': '34657042721'},
     {'nombre': 'JIMMY', 'telefono': '34665036569'},
@@ -42,10 +43,13 @@ class GlobalSettings(db.Model):
 @login_manager.user_loader
 def load_user(user_id): return User.query.get(int(user_id))
 
+# SEMILLA DE DATOS (Se ejecuta solo si la BD está vacía)
 def seed_data():
     if User.query.first(): return
+    # Supervisores
     for s in ['ANA', 'RAMON', 'JIMMY']:
         db.session.add(User(name=s, role='Supervisor', is_registered=True, current_status='Activo', password_hash=generate_password_hash('admin123')))
+    # Conductores
     conductores = ['KEVIN M. Jr', 'ANDY M.', 'KENNEDY', 'CEMAL', 'ANTONIO', 'HAYDAR', 'JAVIER', 'JOAN A.', 'KADA', 'KIKE', 'NOUH', 'SALVADOR', 'YOEPH']
     print("--- PINS GENERADOS ---")
     for nombre in conductores:
@@ -62,6 +66,7 @@ def index(): return redirect(url_for('dashboard')) if current_user.is_authentica
 def login():
     if request.method == 'POST':
         ident = request.form.get('email').strip().lower(); pwd = request.form.get('password')
+        # Login híbrido: permite entrar por Email o por Nombre (útil para supervisores iniciales)
         user = User.query.filter((User.email == ident) | (User.name == ident.upper())).first()
         if user and user.password_hash and check_password_hash(user.password_hash, pwd):
             login_user(user); return redirect(url_for('dashboard'))
@@ -94,7 +99,7 @@ def reset_password():
         else: flash('Email o PIN incorrectos.', 'danger')
     return render_template('reset_password.html', supervisores=SUPERVISORES_CONTACTO)
 
-# --- NUEVA RUTA: CAMBIO DE CLAVE INTERNO ---
+# --- CAMBIO DE CLAVE INTERNO (MEJORA V3.1) ---
 @app.route('/change_password_internal', methods=['POST'])
 @login_required
 def change_password_internal():
@@ -110,6 +115,7 @@ def change_password_internal():
 def dashboard():
     settings = GlobalSettings.query.first()
     drivers = User.query.filter_by(role='Conductor').all()
+    # Orden visual: Problemas abajo, Activos arriba
     drivers.sort(key=lambda x: x.current_status != 'Activo')
     dias_map = {0: 'Lunes', 1: 'Martes', 2: 'Miércoles', 3: 'Jueves', 4: 'Viernes', 5: 'Sábado', 6: 'Domingo'}
     return render_template('dashboard.html', user=current_user, drivers=drivers, escoba_actual=settings.current_escoba_name, hoy_dia=dias_map[datetime.now().weekday()])
@@ -131,6 +137,7 @@ def next_turn():
     candidatos = [d for d in drivers if d.current_status == 'Activo' and hoy not in d.fixed_days_off]
     if not candidatos: flash('Nadie disponible hoy.', 'danger')
     else:
+        # Lógica de Justicia Histórica
         def get_date(x): return x.last_escoba_date if x.last_escoba_date else datetime(1900,1,1)
         candidatos.sort(key=lambda x: (get_date(x), x.id))
         elegido = candidatos[0]
