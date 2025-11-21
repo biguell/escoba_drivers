@@ -1,0 +1,55 @@
+
+******************************************************************************
+* MEMORIA TÉCNICA - ESCOBA DRIVERS (V3.2)                   *
+******************************************************************************
+
+1. DATOS DE ACCESO
+------------------
+- URL Pública:      https://Yoeph.pythonanywhere.com
+- Repositorio:      https://github.com/biguell/escoba_drivers
+- Carpeta Local:    C:\Users\jluis\Desktop\proyecto_escoba
+
+2. CREDENCIALES DE ADMINISTRADOR (INICIALES)
+--------------------------------------------
+Los Supervisores (Ana, Ramon, Jimmy) entran inicialmente con:
+- Usuario:    RAMON (o ANA, o JIMMY)
+- Contraseña: admin123
+
+*NOTA: Deben cambiarla usando el botón "⚙️ Clave" una vez dentro.
+
+3. FLUJO DE TRABAJO (CÓMO ACTUALIZAR)
+-------------------------------------
+Cada vez que hagas un cambio en tu PC, sigue este ritual:
+
+A) EN TU PC (PowerShell):
+   1. cd C:\Users\jluis\Desktop\proyecto_escoba
+   2. git add .
+   3. git commit -m "Descripción del cambio"
+   4. git push
+
+B) EN LA NUBE (PythonAnywhere Bash):
+   1. cd escoba_drivers
+   2. git pull
+   3. (Si hay librerías nuevas): pip3 install -r requirements.txt --user
+
+C) REINICIO (PythonAnywhere Web Tab):
+   1. Botón verde "Reload".
+
+4. FUNCIONALIDADES CLAVE
+------------------------
+- PIN de Seguridad: Cada conductor tiene un código único generado al inicio.
+- WhatsApp Mágico: En el panel de Admin, los botones verdes abren WhatsApp Web
+  con el mensaje y el PIN ya escritos para enviar.
+- Justicia Histórica: El turno no es aleatorio. Se asigna al conductor disponible
+  que lleva más tiempo sin hacerlo (fecha más antigua).
+
+5. SOLUCIÓN DE PROBLEMAS
+------------------------
+- Si la web da error: Mira los "Error logs" en la pestaña Web de PythonAnywhere.
+- Si Git falla al subir: Asegúrate de que no hay archivos abiertos.
+- Si olvidan contraseña: El supervisor entra, mira el PIN en la tabla roja
+  y se lo da al conductor para que use "¿Olvidaste contraseña?".
+
+******************************************************************************
+Generado automáticamente el 21/11/2025
+******************************************************************************
