@@ -1,7 +1,6 @@
-MANUAL DE SUBIDA:
-1. Se ha creado el archivo 'paquete_escoba.zip' EN TU ESCRITORIO.
-2. Sube ese ZIP a PythonAnywhere.
-3. Consola: unzip paquete_escoba.zip
-4. Consola: pip3 install -r requirements.txt --user
-5. Web Tab: Source code -> /home/TU_USUARIO/escoba_drivers
-   (OJO: Si se descomprime en la raíz, será solo /home/TU_USUARIO/)
+MANUAL ACTUALIZACIÓN V4.2:
+1. Sube este ZIP a PythonAnywhere.
+2. Descomprime: unzip -o paquete_escoba_v4_2.zip -d escoba_drivers
+3. NO BORRES LA BASE DE DATOS.
+4. Reinicia la web (Reload).
+5. ¡Disfruta del poder de cambiar estados de otros!
