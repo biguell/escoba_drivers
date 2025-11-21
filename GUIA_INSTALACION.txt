@@ -1,0 +1,7 @@
+MANUAL DE SUBIDA:
+1. Se ha creado el archivo 'paquete_escoba.zip' EN TU ESCRITORIO.
+2. Sube ese ZIP a PythonAnywhere.
+3. Consola: unzip paquete_escoba.zip
+4. Consola: pip3 install -r requirements.txt --user
+5. Web Tab: Source code -> /home/TU_USUARIO/escoba_drivers
+   (OJO: Si se descomprime en la raíz, será solo /home/TU_USUARIO/)
