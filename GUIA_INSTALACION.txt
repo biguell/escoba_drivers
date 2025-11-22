@@ -1,6 +1,7 @@
-MANUAL ACTUALIZACIÓN V4.2:
+MANUAL ACTUALIZACIÓN V4 (Refuerzo):
 1. Sube este ZIP a PythonAnywhere.
-2. Descomprime: unzip -o paquete_escoba_v4_2.zip -d escoba_drivers
-3. NO BORRES LA BASE DE DATOS.
+2. Descomprime: unzip paquete_escoba_v4.zip -d escoba_drivers
+3. IMPORTANTE: Borra la base de datos antigua para que se cree la nueva con soporte para 2 conductores.
+   Ejecuta en consola: rm /home/TU_USUARIO/escoba_drivers/db_escoba.sqlite
 4. Reinicia la web (Reload).
-5. ¡Disfruta del poder de cambiar estados de otros!
+   (Se generarán nuevos PINs, tendrás que verlos en el panel y avisar).
