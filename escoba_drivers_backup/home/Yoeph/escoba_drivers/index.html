@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escoba Drives - Iniciar Sesión</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-animation"></div>
+
+    <!-- Login Screen -->
+    <main class="login-container" id="loginContainer">
+        <div class="login-card">
+            <header class="login-header">
+                <h1>Escoba Drives</h1>
+                <span class="version-badge">Versión: 4.4</span>
+            </header>
+
+            <form class="login-form" id="loginForm">
+                <div class="input-group">
+                    <label for="email">Email / Usuario Admin</label>
+                    <input type="text" id="email" name="email" placeholder="nombre@ejemplo.com" required
+                        autocomplete="username">
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required
+                        autocomplete="current-password">
+                </div>
+
+                <div class="form-actions">
+                    <a href="#" class="forgot-password">¿Olvidaste contraseña?</a>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    <span>Entrar</span>
+                    <div class="btn-glow"></div>
+                </button>
+
+                <div class="form-footer">
+                    <a href="#" class="new-account">¿Nuevo?</a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Dashboard Screen -->
+    <main class="dashboard-container hidden" id="dashboardContainer">
+        <div class="dashboard-content">
+            <!-- Escoba del Día Section -->
+            <div class="hero-section">
+                <div class="hero-header">
+                    <span class="broom-icon">🧹</span> ESCOBA DEL DÍA (Martes)
+                </div>
+                <div class="hero-body">
+                    <h1 id="currentEscoba">JAVIER</h1>
+                    <div id="reinforcementsList" class="reinforcements-list"></div>
+                    <div class="hero-actions">
+                        <button class="btn-danger">
+                            <i class="icon-calc"></i> CALCULAR SIGUIENTE
+                        </button>
+                        <button class="btn-outline">
+                            <i class="icon-plus"></i> AÑADIR REFUERZO
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drivers List -->
+            <div class="section-header">
+                <h2>PLANTILLA DE CONDUCTORES</h2>
+                <button class="btn-blue-sm">👤 Nuevo Conductor</button>
+            </div>
+
+            <div class="drivers-grid" id="driversGrid">
+                <!-- Drivers will be populated by JS -->
+            </div>
+
+            <!-- PIN Codes Section Removed -->
+
+            <div class="dashboard-footer">
+                Versión: 4.4
+            </div>
+        </div>
+    </main>
+
+    <!-- Activation Screen -->
+    <main class="activation-container hidden" id="activationContainer">
+        <div class="activation-card">
+            <h2 class="activation-title">Activar Cuenta</h2>
+
+            <form class="activation-form" id="activationForm">
+                <div class="input-group">
+                    <label for="driverSelect">¿Quién eres?</label>
+                    <select id="driverSelect" name="driverSelect" required>
+                        <option value="" disabled selected>-- Busca tu nombre --</option>
+                        <!-- Options populated by JS -->
+                    </select>
+                </div>
+
+                <div class="input-group pin-group">
+                    <label for="securityPin" class="text-red">PIN de Seguridad</label>
+                    <div class="pin-input-wrapper">
+                        <input type="text" id="securityPin" name="securityPin" placeholder="Pídelo a tu supervisor"
+                            required>
+                        <button type="button" class="btn-verify-pin">
+                            <span class="icon-grid">#</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="days-off-section">
+                    <label>TUS DÍAS LIBRES FIJOS</label>
+                    <div class="days-grid">
+                        <label class="checkbox-label"><input type="checkbox" name="day" value="Lunes">
+                            Lunes</label>
+                        <label class="checkbox-label"><input type="checkbox" name="day" value="Martes">
+                            Martes</label>
+                        <label class="checkbox-label"><input type="checkbox" name="day" value="Miércoles">
+                            Miércoles</label>
+                        <label class="checkbox-label"><input type="checkbox" name="day" value="Jueves">
+                            Jueves</label>
+                        <label class="checkbox-label"><input type="checkbox" name="day" value="Viernes">
+                            Viernes</label>
+                        <label class="checkbox-label"><input type="checkbox" name="day" value="Sábado">
+                            Sábado</label>
+                        <label class="checkbox-label"><input type="checkbox" name="day" value="Domingo">
+                            Domingo</label>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="actPhone">Teléfono (WhatsApp)</label>
+                    <input type="tel" id="actPhone" name="actPhone" placeholder="+34 600 000 000" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="actPassword">Contraseña</label>
+                    <input type="password" id="actPassword" name="actPassword" required>
+                </div>
+
+                <button type="submit" class="btn-activate">ACTIVAR</button>
+            </form>
+
+            <div class="form-footer">
+                <a href="#" class="back-to-login">Volver al inicio</a>
+            </div>
+        </div>
+        <div class="activation-footer">Versión: 4.4</div>
+    </main>
+
+    <!-- Edit Driver Modal -->
+    <div id="editDriverModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modalTitle">Editar Conductor</h2>
+            <form id="editDriverForm">
+                <input type="hidden" id="editDriverOriginalName">
+                <div class="input-group">
+                    <label for="editName">Nombre</label>
+                    <input type="text" id="editName" name="editName" required>
+                </div>
+                <div class="input-group">
+                    <label for="editPhone">Teléfono (WhatsApp)</label>
+                    <input type="tel" id="editPhone" name="editPhone" placeholder="+34...">
+                </div>
+                <div class="input-group">
+                    <label for="editLastSeen">Última Vez (Escoba)</label>
+                    <input type="date" id="editLastSeen" name="editLastSeen">
+                </div>
+                <div class="input-group">
+                    <label for="editPin">PIN</label>
+                    <input type="text" id="editPin" name="editPin">
+                </div>
+                <div class="days-off-section">
+                    <label>Días Libres</label>
+                    <div class="days-grid">
+                        <label class="checkbox-label"><input type="checkbox" name="editDay" value="Lunes"> Lunes</label>
+                        <label class="checkbox-label"><input type="checkbox" name="editDay" value="Martes">
+                            Martes</label>
+                        <label class="checkbox-label"><input type="checkbox" name="editDay" value="Miércoles">
+                            Miércoles</label>
+                        <label class="checkbox-label"><input type="checkbox" name="editDay" value="Jueves">
+                            Jueves</label>
+                        <label class="checkbox-label"><input type="checkbox" name="editDay" value="Viernes">
+                            Viernes</label>
+                        <label class="checkbox-label"><input type="checkbox" name="editDay" value="Sábado">
+                            Sábado</label>
+                        <label class="checkbox-label"><input type="checkbox" name="editDay" value="Domingo">
+                            Domingo</label>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="editStatus">Estado</label>
+                    <select id="editStatus" name="editStatus">
+                        <option value="Activo">Activo</option>
+                        <option value="Vacaciones">Vacaciones</option>
+                        <option value="Baja">Baja</option>
+                        <option value="Asuntos">Asuntos</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,9 @@
+import sys
+
+# Añade la ruta de tu proyecto al path de Python
+path = '/home/Yoeph/escoba_drivers'
+if path not in sys.path:
+    sys.path.insert(0, path)
+
+# Importa la variable 'app' desde tu fichero 'flask_app.py'
+from flask_app import app as application

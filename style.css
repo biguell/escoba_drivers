@@ -1,0 +1,514 @@
+:root {
+    --primary-color: #6366f1;
+    --primary-hover: #4f46e5;
+    --bg-gradient-start: #0f172a;
+    --bg-gradient-end: #1e293b;
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: rgba(148, 163, 184, 0.1);
+    --glow-color: rgba(99, 102, 241, 0.5);
+    --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+    color: var(--text-main);
+    min-height: 100vh;
+    /* Removed display: flex from body to allow containers to handle their own layout */
+    z-index: 0;
+}
+
+/* Centering Wrapper for Login and Activation */
+.login-container,
+.activation-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.login-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 420px;
+    /* Ensures it doesn't get too wide on desktop */
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.login-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(to right, #fff, #cbd5e1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+}
+
+.version-badge {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 4px 12px;
+    border-radius: 9999px;
+    border: 1px solid var(--border-color);
+    font-weight: 500;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    color: #fff;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    background: rgba(15, 23, 42, 0.8);
+}
+
+.input-group input::placeholder {
+    color: rgba(148, 163, 184, 0.5);
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 24px;
+}
+
+.forgot-password {
+    font-size: 0.875rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.forgot-password:hover {
+    color: #818cf8;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.form-footer {
+    margin-top: 24px;
+    text-align: center;
+}
+
+.new-account {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.new-account:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* Dashboard Styles */
+.hidden {
+    display: none !important;
+}
+
+.dashboard-container {
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: #f0f2f5;
+    color: #333;
+    overflow-y: auto;
+}
+
+.dashboard-content {
+    width: 100%;
+    max-width: 800px;
+    /* Centered content max-width */
+    margin: 0 auto;
+    /* Centers the content horizontally */
+    padding-bottom: 40px;
+}
+
+/* Hero Section */
+.hero-section {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 24px;
+    border: 1px solid #007bff;
+    text-align: center;
+    /* Center text in hero */
+}
+
+.hero-header {
+    background: #007bff;
+    color: white;
+    padding: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    /* Center header content */
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+}
+
+.hero-body {
+    padding: 30px 20px;
+}
+
+.hero-body h1 {
+    font-size: 2.5rem;
+    color: #212529;
+    margin-bottom: 24px;
+    font-weight: 700;
+}
+
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    /* Allow buttons to wrap on small screens */
+}
+
+.btn-danger,
+.btn-outline {
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    flex: 1;
+    /* Make buttons grow */
+    min-width: 140px;
+    max-width: 200px;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+    border: none;
+}
+
+.btn-outline {
+    background: white;
+    color: #28a745;
+    border: 2px solid #28a745;
+}
+
+/* Drivers Grid */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding: 0 5px;
+}
+
+.section-header h2 {
+    font-size: 1rem;
+    color: #6c757d;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.btn-blue-sm {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.drivers-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    /* Single column on mobile by default */
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+/* Tablet/Desktop Grid */
+@media (min-width: 600px) {
+    .drivers-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+}
+
+.driver-card {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.driver-info h3 {
+    font-size: 1.1rem;
+    color: #212529;
+    margin-bottom: 4px;
+}
+
+.driver-info p {
+    font-size: 0.85rem;
+}
+
+.driver-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 4px;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    min-width: 80px;
+    text-align: center;
+}
+
+.status-active {
+    background: #28a745;
+}
+
+.status-asuntos {
+    background: #ffc107;
+    color: #212529;
+}
+
+.status-baja {
+    background: #dc3545;
+}
+
+.status-vacaciones {
+    background: #ffc107;
+    color: #212529;
+}
+
+.icon-broom {
+    font-size: 1.4rem;
+}
+
+.btn-icon,
+.btn-icon-delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 5px;
+}
+
+/* Reinforcements */
+.reinforcements-list {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+}
+
+.reinforcement-item {
+    background: #f8f9fa;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    color: #212529;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #dee2e6;
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    /* Padding for mobile */
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    max-height: 90vh;
+    /* Prevent overflow on small screens */
+    overflow-y: auto;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+}
+
+/* Activation Screen */
+.activation-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 450px;
+}
+
+.days-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    color: #555;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.checkbox-label input {
+    width: 18px;
+    height: 18px;
+}
+
+.btn-activate {
+    width: 100%;
+    padding: 14px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* Mobile Specific Adjustments */
+@media (max-width: 480px) {
+    .login-card {
+        padding: 30px 20px;
+    }
+
+    .hero-body h1 {
+        font-size: 2rem;
+    }
+
+    .btn-danger,
+    .btn-outline {
+        width: 100%;
+        /* Full width buttons on mobile */
+        max-width: none;
+    }
+
+    .drivers-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .driver-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .driver-status {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .modal-content {
+        padding: 20px;
+    }
+}
